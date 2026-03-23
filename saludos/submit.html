@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar Mensaje</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px 20px; background: #f4f4f4; }
+        input[type="text"] { width: 90%; padding: 15px; font-size: 18px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; }
+        button { background: #28a745; color: white; border: none; padding: 15px 30px; font-size: 18px; border-radius: 8px; cursor: pointer; width: 90%; }
+    </style>
+</head>
+<body>
+    <h2>¡Aparecé en pantalla!</h2>
+    <input type="text" id="msgText" placeholder="Escribí tu mensaje acá..." maxlength="100">
+    <br>
+    <button onclick="sendMessage()">Enviar</button>
+
+    <script>
+        function sendMessage() {
+            const text = document.getElementById('msgText').value;
+            if(!text) return;
+
+            const params = new URLSearchParams();
+            params.append('text', text);
+
+            fetch('api.php?action=add', { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: params.toString() 
+            })
+            .then(() => {
+                alert('¡Mensaje enviado!');
+                document.getElementById('msgText').value = '';
+            });
+        }
+    </script>
+</body>
+</html>
